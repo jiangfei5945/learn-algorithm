@@ -3,33 +3,41 @@ const {
 } = require('./LinkedList');
 
 function merge(l1, l2) {
-  let linkResult;
-  let l1Link = l1;
-  let l2Link = l2;
-  if (l1Link.data < l2Link.data) {
-    linkResult = l1Link;
-    l1Link = l1Link.next;
-  } else {
-    linkResult = l2Link;
-    l2Link = l2Link.next;
+  if (!listA) {
+    return listB
   }
-  let currentNode = linkResult;
-  while (l1Link.next && l2Link.next) {
-    if (l1Link.data < l2Link.data) {
-      currentNode.next = l1Link;
-      l1Link = l1Link.next;
+  if (!listB) {
+    return listA
+  }
+
+  let a = listA
+  let b = listB
+  let resultList = undefined
+  if (a.element < b.element) {
+    resultList = a
+    a = a.next
+  } else {
+    resultList = b
+    b = b.next
+  }
+  let currentNode = resultList
+  while (a !== null && b !== null) {
+    if (a.element < b.element) {
+      currentNode.next = a
+      a = a.next
     } else {
-      currentNode.next = l2Link;
-      l2Link = l2Link.next;
+      currentNode.next = b
+      b = b.next
     }
-    currentNode = currentNode.next;
+    currentNode = currentNode.next
   }
-  if (l1Link.next) {
-    currentNode.next = l1Link;
+
+  if (a != null) {
+    currentNode.next = a
   } else {
-    currentNode.next = l2Link;
+    currentNode.next = b
   }
-  return linkResult;
+  return resultList
 }
 
 let l1 = buildLinkedList([1, 3, 4, 6]);
